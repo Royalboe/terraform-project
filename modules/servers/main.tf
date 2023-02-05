@@ -89,7 +89,7 @@ ${aws_instance.Altschool3.public_ip}
 
 resource "null_resource" "nulls" {
   # depends_on = [aws_instance.web_1, aws_instance.web_2, aws_instance.web_3]
-  depends_on = local_file.host-inventory
+  depends_on = local_file.host-inventory.id
   # Run the ansible command for the hosts
   provisioner "local-exec" {
     command = "ansible-playbook -i host-inventory --private-key ${var.namespace}-key.pem main.yml"
