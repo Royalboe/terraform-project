@@ -18,7 +18,7 @@ data "aws_ami" "ubuntu" {
 resource "aws_instance" "web_1" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
-  subnet_id     = var.pub_subnet_1
+  subnet_id     = var.pub_subnets[0]
   vpc_security_group_ids = [var.web_server_SG]
   key_name = var.key_name
   tags = var.proj-tag
@@ -27,7 +27,7 @@ resource "aws_instance" "web_1" {
 resource "aws_instance" "web_2" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
-  subnet_id     = var.pub_subnet_2
+  subnet_id     = var.pub_subnets[1]
   vpc_security_group_ids = [var.web_server_SG]
   key_name = var.key_name
   tags = var.proj-tag
@@ -36,7 +36,7 @@ resource "aws_instance" "web_2" {
 resource "aws_instance" "web_3" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
-  subnet_id     = var.pub_subnet_3
+  subnet_id     = var.pub_subnets[2]
   vpc_security_group_ids = [var.web_server_SG]
   key_name = var.key_name
   tags = var.proj-tag

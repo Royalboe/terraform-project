@@ -1,6 +1,6 @@
-variable "pub_subnet_1" {}
-variable "pub_subnet_2" {}
-variable "pub_subnet_3" {}
+variable "pub_subnets" {
+    type = list(string)
+}
 variable "web_server_SG" {}
 variable "key_name" {}
 variable "namespace" {

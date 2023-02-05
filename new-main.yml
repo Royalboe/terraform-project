@@ -9,9 +9,7 @@ module "ssh_key" {
 module "servers" {
   source = ./modules/servers
   key_name = module.key-pair.key_name
-  pub_subnet_1 = module.network.pub_subnet_id_1
-  pub_subnet_2 = module.network.pub_subnet_id_2
-  pub_subnet_3 = module.network.pub_subnet_id_3
+  pub_subnets = module.network.pub_subnets
   vpc_id = module.network.vpc_id
   web_server_SG = module.network.web_server_SG
   availability_zones = var.availability_zones
