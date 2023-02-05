@@ -40,6 +40,7 @@ resource "aws_instance" "web_3" {
   vpc_security_group_ids = [var.web_server_SG]
   key_name = "ayomide-key"
   tags = var.proj-tag
+}
 
 # Create an EBS volume
 resource "aws_ebs_volume" "ebs_vol_1" {
