@@ -1,0 +1,8 @@
+- name: Install and configure web-servers
+  hosts: all
+  become: true
+  remote_user: root
+
+  tasks:
+    - include_role:
+        name: servers

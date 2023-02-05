@@ -1,0 +1,39 @@
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    upgrade: yes
+    update_cache: yes
+
+- name: Setting timezone to Africa/Lagos
+  community.general.timezone:
+    name: Africa/Lagos
+
+- name: Install Apache2
+  ansible.builtin.package:
+    name:
+      - apache2
+    become: true
+    state: present
+    update_cache: yes
+
+- name: Take ownership of the application folder
+  ansible.builtin.file:
+    path: /var/www/html/
+    owner: "{{ ansible_effective_user_id }}"
+    group: "{{ ansible_effective_group_id }}"
+  become: true
+
+- name: setup root
+  shell: |
+    cd /var/www/html
+    host=$(hostname)
+    time-zone=$(timedatectl | grep Time)
+    date=$(date)
+    echo '<h1> Host Name </h1>' > /var/www/html/index.html
+    echo "<h2> $host </h2>" >> /var/www/html/index.html
+    echo "<h1> Date </h1>" >> /var/www/html/index.html
+    echo "<h2> $date </h2>" >> /var/www/html/index.html
+    echo "<h1> Time Zone </h1>" >> /var/www/html/index.html
+    echo "<h2> $timezone </h2>" >> /var/www/html/index.html
+    echo '<h4> Created by Ayomide </h4>' >> /var/www/html/index.html
+  become: true

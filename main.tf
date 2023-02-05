@@ -271,7 +271,7 @@ resource "aws_lb" "alb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.load_balancer_SG.id]
-  subnets            = [for subnet in aws_subnet.public : subnet.id]
+  subnets            = [aws_subnet.publicsubnet_1.id, aws_subnet.publicsubnet_2.id, aws_subnet.publicsubnet_3.id]
 
   enable_deletion_protection = false
 
@@ -318,27 +318,29 @@ resource "aws_lb_target_group_attachment" "alb_target_group_attachment_1" {
   target_group_arn = aws_lb_target_group.alb_target_group.arn
   target_id        = aws_instance.web_1.id
   port             = 80
-  availability_zone = var.availability_zones[0]
+  # availability_zone = var.availability_zones[0]
 }
 
 resource "aws_lb_target_group_attachment" "alb_target_group_attachment_2" {
   target_group_arn = aws_lb_target_group.alb_target_group.arn
   target_id        = aws_instance.web_2.id
   port             = 80
-  availability_zone = var.availability_zones[1]
+  # availability_zone = var.availability_zones[1]
 }
 
 resource "aws_lb_target_group_attachment" "alb_target_group_attachment_3" {
   target_group_arn = aws_lb_target_group.alb_target_group.arn
   target_id        = aws_instance.web_3.id
   port             = 80
-  availability_zone = var.availability_zones[2]
+  # availability_zone = var.availability_zones[2]
 }
 
 # Create a Route53 Zone
 resource "aws_route53_zone" "my_zone" {
   name = "royalboe.com"
-  vpc_id = aws_vpc.Altschool_Net.id
+  vpc {
+    vpc_id = aws_vpc.Altschool_Net.id
+  }
 }
 
 # Create a Route53 Record
