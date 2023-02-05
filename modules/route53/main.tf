@@ -1,9 +1,10 @@
 # Create a Route53 Zone
 resource "aws_route53_zone" "my_zone" {
-  name = "royalboe.com"
+  name = var.domain
   vpc {
-    vpc_id = aws_vpc.Altschool_Net.id
+    vpc_id = var.vpc_id
   }
+  tags = var.proj-tag
 }
 
 # Create a Route53 Record
@@ -12,8 +13,9 @@ resource "aws_route53_record" "terraform-test" {
   name    = "terraform-test.royalboe.com"
   type    = "A"
   alias {
-    name                   = aws_lb.alb.dns_name
-    zone_id                = aws_lb.alb.zone_id
+    name                   = var.lb_dns_name
+    zone_id                = var.alb_zone_id
     evaluate_target_health = false
   }
+  tags = var.proj-tag
 }

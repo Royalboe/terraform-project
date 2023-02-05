@@ -1,16 +1,19 @@
-variable "region" {}
-variable "availability_zones" {
-    type = list(string)
+varible "domain" {
+  description = "Domain name to create"
+  type        = string
+  default     = "example.com"
 }
-variable "main_vpc_cidr" {}
-variable "public_subnets" {
-    type = list(string)
+variable "vpc_id" {
+  description = "VPC ID to create the Route53 Zone in"
+  type        = string
 }
-variable "destination_cidr_block" {}
-variable "namespace" {
-    type = string
-    description = "(optional) describe your variable"
-    default = "dev-test"
+variable "lb_dns_name" {
+  description = "DNS name of the ALB"
+  type        = string
+}
+variable "alb_zone_id" {
+  description = "Zone ID of the ALB"
+  type        = string
 }
 variable "proj-tag" {
   description = "Tags to apply to resources created by this module"
