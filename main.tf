@@ -8,20 +8,20 @@ module "network" {
 }
 
 module "ssh_key" {
-  source = "./modules/ssh-key"
+  source = "./modules/ssh-key-pair"
   namespace = var.namespace
 }
 
 module "servers" {
   source = "./modules/servers"
-  key_name = module.key-pair.key_name
+  key_name = module.ssh_key.key_name
   pub_subnets = module.network.pub_subnets
   web_server_SG = module.network.web_server_SG
   availability_zones = var.availability_zones
   namespace = var.namespace
 }
 
-module "load_balancer" {
+module "loadbalancer" {
   source = "./modules/load-balancer"
   lb_name = "${var.namespace}-lb"
   vpc_id = module.network.vpc_id
