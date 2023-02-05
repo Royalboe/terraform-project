@@ -1,7 +1,7 @@
 - name: Install and configure web-servers
   hosts: all
   become: true
-  remote_user: root
+  remote_user: ubuntu
 
   tasks:
     - include_role:
