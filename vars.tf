@@ -3,7 +3,7 @@ variable "availability_zones" {
     type = list(string)
 }
 variable "main_vpc_cidr" {}
-variable "pub_subnets" {
+variable "public_subnets" {
     type = list(string)
 }
 variable "destination_cidr_block" {}

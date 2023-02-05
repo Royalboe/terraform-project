@@ -43,7 +43,7 @@ resource "aws_internet_gateway" "IGW" {    # Creating Internet Gateway
 # Create a Public Subnets.
 resource "aws_subnet" "publicsubnet_1" {    # Creating Public Subnets
   vpc_id =  aws_vpc.Altschool_Net.id
-  cidr_block = "${var.public_subnet_1}"        # CIDR block of public subnets
+  cidr_block = "${var.public_subnets[0]}"        # CIDR block of public subnets
   map_public_ip_on_launch = true
 #  availability_zone       = data.aws_availability_zones.zones.names[0]
   availability_zone = var.availability_zones[0]
@@ -51,7 +51,7 @@ resource "aws_subnet" "publicsubnet_1" {    # Creating Public Subnets
 
 resource "aws_subnet" "publicsubnet_2" {    # Creating Public Subnets
   vpc_id =  aws_vpc.Altschool_Net.id
-  cidr_block = "${var.public_subnet_2}"        # CIDR block of public subnets
+  cidr_block = "${var.public_subnets[1]}"        # CIDR block of public subnets
   map_public_ip_on_launch = true
   # availability_zone       = data.aws_availability_zones.zones.names[1]
   availability_zone = var.availability_zones[1]
@@ -59,7 +59,7 @@ resource "aws_subnet" "publicsubnet_2" {    # Creating Public Subnets
 
 resource "aws_subnet" "publicsubnet_3" {    # Creating Public Subnets
   vpc_id =  aws_vpc.Altschool_Net.id
-  cidr_block = "${var.public_subnet_3}"        # CIDR block of public subnets
+  cidr_block = "${var.public_subnets[2]}"        # CIDR block of public subnets
   map_public_ip_on_launch = true
   # availability_zone       = data.aws_availability_zones.zones.names[2]
   availability_zone = var.availability_zones[2]

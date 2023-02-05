@@ -36,7 +36,7 @@ resource "aws_instance" "web_2" {
 resource "aws_instance" "web_3" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
-  subnet_id     = var.pub_subnet[2]
+  subnet_id     = var.pub_subnets[2]
   vpc_security_group_ids = [var.web_server_SG]
   key_name = var.key_name
   tags = var.proj-tag
@@ -81,9 +81,9 @@ resource "aws_volume_attachment" "ebs_att_3" {
 resource "local_file" "host-inventory" {
   filename = "./host-inventory"
   content  = <<EOT
-${aws_instance.Altschool1.public_ip}
-${aws_instance.Altschool2.public_ip}
-${aws_instance.Altschool3.public_ip}
+${aws_instance.web_1.public_ip}
+${aws_instance.web_2.public_ip}
+${aws_instance.web_3.public_ip}
   EOT
 }
 

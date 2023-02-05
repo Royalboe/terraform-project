@@ -15,7 +15,7 @@ module "ssh_key" {
 module "servers" {
   source = "./modules/servers"
   key_name = module.ssh_key.key_name
-  pub_subnets = module.network.pub_subnets
+  pub_subnets = module.network.public_subnets
   web_server_SG = module.network.web_server_SG
   availability_zones = var.availability_zones
   namespace = var.namespace
