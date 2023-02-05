@@ -22,7 +22,7 @@ module "servers" {
 }
 
 module "loadbalancer" {
-  source = "./modules/load-balancer"
+  source = "./modules/loadbalancer"
   lb_name = "${var.namespace}-lb"
   vpc_id = module.network.vpc_id
   public_subnets = module.network.public_subnets
