@@ -64,19 +64,16 @@ resource "aws_route_table" "PublicRT" {
 resource "aws_route_table_association" "PublicRTassociation_1" {
   subnet_id = aws_subnet.publicsubnet_1.id
   route_table_id = aws_route_table.PublicRT.id
-  tags = var.proj-tag
 }
 
 resource "aws_route_table_association" "PublicRTassociation_2" {
     subnet_id = aws_subnet.publicsubnet_2.id
     route_table_id = aws_route_table.PublicRT.id
-    tags = var.proj-tag
 }
 
 resource "aws_route_table_association" "PublicRTassociation_3" {
     subnet_id = aws_subnet.publicsubnet_3.id
     route_table_id = aws_route_table.PublicRT.id
-    tags = var.proj-tag
 }
 
 # Create a Security Group for the EC2 instance
