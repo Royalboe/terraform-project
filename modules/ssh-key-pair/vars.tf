@@ -1,9 +1,5 @@
-variable "region" {}
-variable "availability_zones" {
-    type = list(string)
+variable "namespace" {
+  type        = string
+  description = "Namespace, which could be your organization name, e.g. 'eg' or 'cp'"
+  default = "dev-test"
 }
-variable "main_vpc_cidr" {}
-variable "public_subnet_1" {}
-variable "public_subnet_2" {}
-variable "public_subnet_3" {}
-variable "destination_cidr_block" {}

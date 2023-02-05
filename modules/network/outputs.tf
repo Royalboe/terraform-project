@@ -13,6 +13,11 @@ output "pub_subnet_2" {
   value       = aws_subnet.publicsubnet_2.id
 }
 
+output "pub_subnet_3" {
+  description = "ID of the public subnet"
+  value       = aws_subnet.publicsubnet_3.id
+}
+
 output "pub_subnets" {
   description = "ID of the public subnet"
   value       = [aws_subnet.publicsubnet_1.id, aws_subnet.publicsubnet_2.id, aws_subnet.publicsubnet_3.id]
@@ -21,7 +26,8 @@ output "lb_sec_grps" {
   description = "ID of the public subnet"
   value       = [aws_security_group.load_balancer_SG.id]
 }
-output "pub_subnet_3" {
+
+output "web_server_SG" {
   description = "ID of the public subnet"
-  value       = aws_subnet.publicsubnet_3.id
+  value       = aws_security_group.web_server_SG.id
 }
