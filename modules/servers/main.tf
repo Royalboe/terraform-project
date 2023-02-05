@@ -20,7 +20,7 @@ resource "aws_instance" "web_1" {
   instance_type = "t2.micro"
   subnet_id     = var.pub_subnet_1
   vpc_security_group_ids = [var.web_server_SG]
-  key_name = "ayomide-key"
+  key_name = var.key_name
   tags = var.proj-tag
 }
 
@@ -29,7 +29,7 @@ resource "aws_instance" "web_2" {
   instance_type = "t2.micro"
   subnet_id     = var.pub_subnet_2
   vpc_security_group_ids = [var.web_server_SG]
-  key_name = "ayomide-key"
+  key_name = var.key_name
   tags = var.proj-tag
 }
 
@@ -38,7 +38,7 @@ resource "aws_instance" "web_3" {
   instance_type = "t2.micro"
   subnet_id     = var.pub_subnet_3
   vpc_security_group_ids = [var.web_server_SG]
-  key_name = "ayomide-key"
+  key_name = var.key_name
   tags = var.proj-tag
 }
 
