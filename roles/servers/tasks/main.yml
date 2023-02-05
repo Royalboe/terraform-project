@@ -20,9 +20,9 @@
     path: /var/www/html/
     owner: "{{ ansible_effective_user_id }}"
     group: "{{ ansible_effective_group_id }}"
-  become: true
+  become: True
 
-- name: setup root
+- name: Edit Index.html
   shell: |
     cd /var/www/html
     host=$(hostname)
@@ -35,4 +35,4 @@
     echo "<h1> Time Zone </h1>" >> /var/www/html/index.html
     echo "<h2> $timezone </h2>" >> /var/www/html/index.html
     echo '<h4> Created by Ayomide </h4>' >> /var/www/html/index.html
-  become: true
+  become: True
