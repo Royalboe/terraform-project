@@ -3,6 +3,9 @@ variable "pub_subnet_2" {}
 variable "pub_subnet_3" {}
 variable "web_server_SG" {}
 variable "key_name" {}
+variable "namespace" {
+  type        = string
+}
 variable "proj-tag" {
     type = map(string)
     default = {

@@ -75,3 +75,19 @@ resource "aws_volume_attachment" "ebs_att_3" {
   volume_id   = aws_ebs_volume.ebs_vol_3.id
   instance_id = aws_instance.web_3.id
 }
+
+
+# Create a file to store the IP addresses of the instances
+resource "local_file" "host-inventory" {
+  filename = "./host-inventory"
+  content  = <<EOT
+${aws_instance.Altschool1.public_ip}
+${aws_instance.Altschool2.public_ip}
+${aws_instance.Altschool3.public_ip}
+  EOT
+}
+
+# Run the ansible command for the hosts
+provisioner "local-exec" {
+command = "ansible-playbook -i host-inventory --private-key ${var.namespace}-key.pem main.yml"
+}
