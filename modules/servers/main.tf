@@ -14,70 +14,32 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Canonical
 }
 
-# Create a .pem file
-# RSA key of size 2048 bits
-resource "tls_private_key" "new-key" {
-  algorithm = "RSA"
-  rsa_bits  = 2048
-}
-
-resource "local_sensitive_file" "private_key" {
-  filename          = "${var.namespace}-key.pem"
-  content = tls_private_key.new-key.private_key_pem
-  file_permission   = "0700"
-}
-
-
-# Create a Key Pair
-resource "aws_key_pair" "devkey" {
-  key_name   = "ayomide-key"
-  public_key = tls_private_key.new-key.public_key_openssh
-# public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCldJxUMlogWB1Uu9/aDYFttIQZi1qP4H1BvfYmlbAKqWlAE3aGODI2MHytxvUk9j8BM7LI3+MibMASRSnXGX6UkHsg+3Vorsj6Nq/n2zjLjqLD6PqE+ijoNx6bjRmgztP7iTgfIBYplu6snT0MXCPXUIEUfMZyh2s251RdBEvaJuf/IgmUmssxbT9juToxjKLHmQGOcH4HmsGt33b5G3JL9KMidA3ACmrNZOZzDl48ZbQYaPLCqOVITC9fz9zo2Zlzzp27CJu4Drw15ycvkK2/nsjL9rBbxjhJigqgZWtHRwphg2OtQsYzXoe8OeCqx/Is2QSiTD6J4mUq2WrL2UdP2/CscPt1W543SwGl1k8hloze3dHlgWEjgGZlLbmx9APiHwsrX7vNZkpCi4vCsCVHdiygnOqQxHnNKKNYVTpojxVPym4ElYlx1hurCN6ndMbneeRjYfB29yB5vNc2YgV7oN+HgkOB3PYWp9y+NdBXXFcMmGegMa8y9H9d6qTrINE= vagrant@ubuntu-focal"
-}
-
-
 # Create EC2 instances
 resource "aws_instance" "web_1" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
-  subnet_id     = aws_subnet.publicsubnet_1.id
-  vpc_security_group_ids = [aws_security_group.web_server_SG.id]
-  depends_on = [
-    aws_key_pair.devkey
-    ]
+  subnet_id     = var.pub_subnet_1
+  vpc_security_group_ids = [var.web_server_SG]
   key_name = "ayomide-key"
-  tags = {
-    Name = "Altschool"
-  }
+  tags = var.proj-tag
 }
 
 resource "aws_instance" "web_2" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
-  subnet_id     = aws_subnet.publicsubnet_2.id
-  vpc_security_group_ids = [aws_security_group.web_server_SG.id]
-  depends_on = [
-    aws_key_pair.devkey
-    ]
+  subnet_id     = var.pub_subnet_2
+  vpc_security_group_ids = [var.web_server_SG]
   key_name = "ayomide-key"
-  tags = {
-    Name = "Altschool"
-  }
+  tags = var.proj-tag
 }
 
 resource "aws_instance" "web_3" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
-  subnet_id     = aws_subnet.publicsubnet_3.id
-  vpc_security_group_ids = [aws_security_group.web_server_SG.id]
-  depends_on = [
-    aws_key_pair.devkey
-  ]
+  subnet_id     = var.pub_subnet_3
+  vpc_security_group_ids = [var.web_server_SG]
   key_name = "ayomide-key"
-  tags = {
-    Name = "Atlschool-mini-project"
-  }
-}
+  tags = var.proj-tag
 
 # Create an EBS volume
 resource "aws_ebs_volume" "ebs_vol_1" {

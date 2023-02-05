@@ -2,22 +2,18 @@
 #   state = "available"
 # }
 
-# data "aws_availability_zones" "zones" {
-#   state = "available"
-# }
 # Create the VPC
-resource "aws_vpc" "Altschool_Net" {                # Creating VPC here
-  cidr_block       = var.main_vpc_cidr     # Defining the CIDR block use 10.0.0.0/24
+resource "aws_vpc" "Altschool_Net" {
+  cidr_block       = var.main_vpc_cidr
   instance_tenancy = "default"
   enable_dns_hostnames = true
+  tags = var.proj-tag
 }
 
 # Create Internet Gateway and attach it to VPC
-resource "aws_internet_gateway" "IGW" {    # Creating Internet Gateway
+resource "aws_internet_gateway" "IGW" {
   vpc_id =  aws_vpc.Altschool_Net.id 
-  tags = {
-    Name = "Altschool"
-    }        # CIDR block of public subnets              # vpc_id will be generated after we create VPC
+  tags = var.proj-tag
 }
 
 # Create an internet gateway
@@ -27,53 +23,60 @@ resource "aws_internet_gateway" "IGW" {    # Creating Internet Gateway
 # } 
 
 # Create a Public Subnets.
-resource "aws_subnet" "publicsubnet_1" {    # Creating Public Subnets
+resource "aws_subnet" "publicsubnet_1" {
   vpc_id =  aws_vpc.Altschool_Net.id
-  cidr_block = "${var.public_subnet_1}"        # CIDR block of public subnets
+  cidr_block = "${var.public_subnets[0]}"
   map_public_ip_on_launch = true
 #  availability_zone       = data.aws_availability_zones.zones.names[0]
   availability_zone = var.availability_zones[0]
+  tags = var.proj-tag
 }
 
-resource "aws_subnet" "publicsubnet_2" {    # Creating Public Subnets
+resource "aws_subnet" "publicsubnet_2" {
   vpc_id =  aws_vpc.Altschool_Net.id
-  cidr_block = "${var.public_subnet_2}"        # CIDR block of public subnets
+  cidr_block = "${var.public_subnets[1]}"
   map_public_ip_on_launch = true
   # availability_zone       = data.aws_availability_zones.zones.names[1]
   availability_zone = var.availability_zones[1]
+  tags = var.proj-tag
 }
 
-resource "aws_subnet" "publicsubnet_3" {    # Creating Public Subnets
+resource "aws_subnet" "publicsubnet_3" {
   vpc_id =  aws_vpc.Altschool_Net.id
-  cidr_block = "${var.public_subnet_3}"        # CIDR block of public subnets
+  cidr_block = "${var.public_subnets[2]}"
   map_public_ip_on_launch = true
   # availability_zone       = data.aws_availability_zones.zones.names[2]
   availability_zone = var.availability_zones[2]
+  tags = var.proj-tag
 }
 
 # Route table for Public Subnet's
-resource "aws_route_table" "PublicRT" {    # Creating RT for Public Subnet
+resource "aws_route_table" "PublicRT" {
   vpc_id =  aws_vpc.Altschool_Net.id
   route {
-    cidr_block = var.destination_cidr_block               # Traffic from Public Subnet reaches Internet via Internet Gateway
+    cidr_block = var.destination_cidr_block
     gateway_id = aws_internet_gateway.IGW.id
   }
+  tags = var.proj-tag
 }
 
 # Route table Association with Public Subnet's
 resource "aws_route_table_association" "PublicRTassociation_1" {
   subnet_id = aws_subnet.publicsubnet_1.id
   route_table_id = aws_route_table.PublicRT.id
+  tags = var.proj-tag
 }
 
 resource "aws_route_table_association" "PublicRTassociation_2" {
     subnet_id = aws_subnet.publicsubnet_2.id
     route_table_id = aws_route_table.PublicRT.id
+    tags = var.proj-tag
 }
 
 resource "aws_route_table_association" "PublicRTassociation_3" {
     subnet_id = aws_subnet.publicsubnet_3.id
     route_table_id = aws_route_table.PublicRT.id
+    tags = var.proj-tag
 }
 
 # Create a Security Group for the EC2 instance
@@ -113,9 +116,7 @@ resource "aws_security_group" "web_server_SG" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = {
-    Name = "Altschool_SG"
-  }
+  tags = var.proj-tag
 }
 
 # Create a Security Group for the load balancer
@@ -147,7 +148,5 @@ resource "aws_security_group" "load_balancer_SG" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  tags = {
-    Name = "My_LB_SG"
-  }
+  tags = var.proj-tag
 }
