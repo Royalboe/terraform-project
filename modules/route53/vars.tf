@@ -1,4 +1,4 @@
-varible "domain" {
+variable "domain" {
   description = "Domain name to create"
   type        = string
   default     = "example.com"
