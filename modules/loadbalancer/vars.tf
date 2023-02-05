@@ -1,12 +1,11 @@
-variable "region" {}
-variable "availability_zones" {
+variable "lb_name" {}
+variable "lb_sec_grps" {
     type = list(string)
 }
-variable "main_vpc_cidr" {}
 variable "public_subnets" {
     type = list(string)
 }
-variable "destination_cidr_block" {}
+variable "vpc_id" {}
 variable "namespace" {
     type = string
     description = "(optional) describe your variable"
@@ -19,4 +18,7 @@ variable "proj-tag" {
     Terraform   = "true"
     Environment = "dev-test"
   }
+}
+variable "web_ids"{
+    type = list(any)
 }

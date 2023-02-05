@@ -1,24 +1,22 @@
 # Create a Load Balancer
 resource "aws_lb" "alb" {
-  name               = "royalboe"
+  name               = var.lb_name
   internal           = false
   load_balancer_type = "application"
-  security_groups    = [aws_security_group.load_balancer_SG.id]
-  subnets            = [aws_subnet.publicsubnet_1.id, aws_subnet.publicsubnet_2.id, aws_subnet.publicsubnet_3.id]
+  security_groups    = var.lb_sec_grps
+  subnets            = var.pub_subnets
 
   enable_deletion_protection = false
 
-  tags = {
-    Name = "alb"
-  }
+  tags = var.proj-tag
 }
 
 # Create a Target Group
 resource "aws_lb_target_group" "alb_target_group" {
-  name     = "royalboe-tg"
+  name     = "${var.namespace}-alb-target-group"
   port     = 80
   protocol = "HTTP"
-  vpc_id   = aws_vpc.Altschool_Net.id
+  vpc_id   = var.vpc_id
   target_type = "instance"
 
   health_check {
@@ -49,21 +47,21 @@ resource "aws_lb_listener" "alb_listener" {
 # Register Targets
 resource "aws_lb_target_group_attachment" "alb_target_group_attachment_1" {
   target_group_arn = aws_lb_target_group.alb_target_group.arn
-  target_id        = aws_instance.web_1.id
+  target_id        = var.web_ids[0]
   port             = 80
   # availability_zone = var.availability_zones[0]
 }
 
 resource "aws_lb_target_group_attachment" "alb_target_group_attachment_2" {
   target_group_arn = aws_lb_target_group.alb_target_group.arn
-  target_id        = aws_instance.web_2.id
+  target_id        = var.web_ids[1]
   port             = 80
   # availability_zone = var.availability_zones[1]
 }
 
 resource "aws_lb_target_group_attachment" "alb_target_group_attachment_3" {
   target_group_arn = aws_lb_target_group.alb_target_group.arn
-  target_id        = aws_instance.web_3.id
+  target_id        = var.web_ids[2]
   port             = 80
   # availability_zone = var.availability_zones[2]
 }
