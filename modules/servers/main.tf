@@ -88,7 +88,7 @@ ${aws_instance.web_3.public_ip}
 }
 
 resource "null_resource" "nulls" {
-  depends_on = [aws_instance.web_1, aws_instance.web_2, aws_instance.web_3]
+  depends_on = [aws_instance.web_1.public_ip, aws_instance.web_2.public_ip, aws_instance.web_3.public_ip]
   # Run the ansible command for the hosts
   provisioner "local-exec" {
     command = "ansible-playbook -i host-inventory --private-key ${var.namespace}-key.pem main.yml"
