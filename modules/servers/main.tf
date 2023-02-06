@@ -76,17 +76,17 @@ resource "aws_volume_attachment" "ebs_att_3" {
   instance_id = aws_instance.web_3.id
 }
 
-resource "aws_instance_state" "web_1" {
+resource "aws_ec2_instance_state" "web_1" {
   instance_id = aws_instance.web_1.id
   state = "running"
 }
 
-resource "aws_instance_state" "web_2" {
+resource "aws_ec2_instance_state" "web_2" {
   instance_id = aws_instance.web_2.id
   state = "running"
 }
 
-resource "aws_instance_state" "web_3" {
+resource "aws_ec2_instance_state" "web_3" {
   instance_id = aws_instance.web_3.id
   state = "running"
 }
@@ -101,7 +101,7 @@ ${aws_instance.web_3.public_ip}
 }
 
 resource "null_resource" "nulls" {
-  depends_on = [aws_instance_state.web_1, aws_instance_state.web_2, aws_instance_state.web_3]
+  depends_on = [aws_ec2_instance_state.web_1, aws_ec2_instance_state.web_2, aws_ec2_instance_state.web_3]
   # Run the ansible command for the hosts
   provisioner "local-exec" {
     command = "ansible-playbook -i host-inventory --private-key ${var.namespace}-key.pem main.yml"
