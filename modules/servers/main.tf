@@ -76,7 +76,20 @@ resource "aws_volume_attachment" "ebs_att_3" {
   instance_id = aws_instance.web_3.id
 }
 
+aws_instance_state "web_1" {
+  instance_id = aws_instance.web_1.id
+  state = "running"
+}
 
+aws_instance_state "web_2" {
+  instance_id = aws_instance.web_2.id
+  state = "running"
+}
+
+aws_instance_state "web_3" {
+  instance_id = aws_instance.web_3.id
+  state = "running"
+}
 # Create a file to store the IP addresses of the instances
 resource "local_file" "host-inventory" {
   filename = "./host-inventory"
@@ -88,8 +101,7 @@ ${aws_instance.web_3.public_ip}
 }
 
 resource "null_resource" "nulls" {
-  depends_on = [aws_instance.web_1, aws_instance.web_2, aws_instance.web_3, 
-  aws_volume_attachment.ebs_att_1, aws_volume_attachment.ebs_att_2, aws_volume_attachment.ebs_att_3]
+  depends_on = [aws_instance_state.web_1, aws_instance_state.web_2, aws_instance_state.web_3]
   # Run the ansible command for the hosts
   provisioner "local-exec" {
     command = "ansible-playbook -i host-inventory --private-key ${var.namespace}-key.pem main.yml"
