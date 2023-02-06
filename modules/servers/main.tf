@@ -76,17 +76,17 @@ resource "aws_volume_attachment" "ebs_att_3" {
   instance_id = aws_instance.web_3.id
 }
 
-aws_instance_state "web_1" {
+resource "aws_instance_state" "web_1" {
   instance_id = aws_instance.web_1.id
   state = "running"
 }
 
-aws_instance_state "web_2" {
+resource "aws_instance_state" "web_2" {
   instance_id = aws_instance.web_2.id
   state = "running"
 }
 
-aws_instance_state "web_3" {
+resource "aws_instance_state" "web_3" {
   instance_id = aws_instance.web_3.id
   state = "running"
 }
