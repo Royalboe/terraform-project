@@ -12,8 +12,8 @@ The script also runs ansible command to configure the virtual machines.
 - Create the ssh config file by running `touch ~/.ssh/config`
 - open the file with your favorite text editor and add the lines below
 - 
-``` Host *
-        StrictHostKeyChecking no ```
+""" Host *
+        StrictHostKeyChecking no """
     
 - Save and exit and run terraform commands
 
