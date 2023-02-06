@@ -10,10 +10,7 @@ The script also runs ansible command to configure the virtual machines.
 - In the root folder, create a terraform.tfvars file to store the needed variables.
 - To let ansible run without prompting for authentication to add ip addresses to the known_hosts:
 - Create the ssh config file by running `touch ~/.ssh/config`
-- open the file with your favorite text editor and add the lines below
-- 
-""" Host *
-        StrictHostKeyChecking no """
+- open the file with your favorite text editor and add configure StrictHostKeyChecking as no for all hosts
     
 - Save and exit and run terraform commands
 
