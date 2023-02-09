@@ -10,7 +10,7 @@ resource "aws_route53_zone" "my_zone" {
 # Create a Route53 Record
 resource "aws_route53_record" "terraform-test" {
   zone_id = aws_route53_zone.my_zone.zone_id
-  name    = "terraform-test.royalboe.com"
+  name    = "terraform-test.royalboe.live"
   type    = "A"
   alias {
     name                   = var.lb_dns_name
