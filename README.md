@@ -18,3 +18,8 @@ The script also runs ansible command to configure the virtual machines.
 - `terraform init`
 - `terraform validate`
 - `terraform apply`
+
+### NOTE
+- `Domain name- royalboe.live`
+- `subdomain name- terraform-test`
+- `Link - http://terraform-test.royalboe.live`
